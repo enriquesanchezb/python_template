@@ -31,6 +31,12 @@ class TestStringsExamples(unittest.TestCase):
         mock_urlopen.return_value = a
         assert StringsExamples.get_first_string() == "hello"
 
+    @patch('sample.strings_example.urllib2.urlopen')
+    def test_get_first_string_from_internet_when_an_error_appears(self, mock_urlopen):
+        a = Mock()
+        a.read.side_effect = ValueError('a')
+        mock_urlopen.return_value = a
+        self.assertRaises(ValueError, StringsExamples.get_first_string())
 
 
 if __name__ == '__main__':
